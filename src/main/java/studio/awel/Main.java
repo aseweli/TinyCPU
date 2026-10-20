@@ -8,7 +8,7 @@ public class Main {
 
         List<Instructions> program;
         try{
-            program = Assembler.assemble("programs/timer.asm");
+            program = Assembler.assemble("programs/showcase.asm");
         } catch (IOException e){
             program = List.of(
                     new Instructions("LOAD", 0, 5),

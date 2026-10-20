@@ -5,10 +5,13 @@ import java.util.List;
 public class CPU {
 
     private final int[] registers = new int[4];
-    private int pc = 0;
-    int clockHz = 60;
-    private boolean halted = false;
     private final List<Instructions> program;
+    private final Memory memory = new Memory(256, 255, 254);
+
+    private int pc = 0;
+    private boolean halted = false;
+
+    int clockHz = 60;
 
     int getPc(){return pc;}
     boolean isHalted(){return halted;}
@@ -63,6 +66,12 @@ public class CPU {
                 break;
             case "SUB":
                 registers[ins.a] -= registers[ins.b];
+                break;
+            case "STR":
+                memory.write(ins.b, registers[ins.a]);
+                break;
+            case "LDR":
+                registers[ins.a] = memory.read(ins.b);
                 break;
             case "PRINT":
                 System.out.println(registers[ins.a]);

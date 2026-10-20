@@ -119,7 +119,7 @@ class CPUTest {
                 new Instructions("HALT", 0),
                 new Instructions("LOAD", 1, 3)
         ));
-        cpu.run(); cpu.run(); cpu.run();
+        cpu.run();
         assertEquals(5, cpu.getRegister(0));
         assertEquals(0, cpu.getRegister(1));
         assertTrue(cpu.isHalted());
