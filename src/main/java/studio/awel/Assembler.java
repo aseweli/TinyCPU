@@ -14,7 +14,8 @@ public class Assembler {
             String opcode = parts[0];
             int a = parts.length > 1 ? Integer.parseInt(parts[1].replace("R", "")) : 0;
             int b = parts.length > 2 ? Integer.parseInt(parts[2].replace("R", "")) : 0;
-            return new Instructions(opcode, a, b);
+            int c = parts.length > 3 ? Integer.parseInt(parts[3].replace("R", "")) : 0;
+            return new Instructions(opcode, a, b, c);
         }).toList();
 
     }

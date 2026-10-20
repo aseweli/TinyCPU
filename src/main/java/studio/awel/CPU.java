@@ -4,11 +4,20 @@ import java.util.List;
 
 public class CPU {
 
-    private int[] registers = new int[4];
+    private final int[] registers = new int[4];
     private int pc = 0;
+    int clockHz = 60;
     private boolean halted = false;
-    private List<Instructions> program;
-    private int clockHz = 60;
+    private final List<Instructions> program;
+
+    int getPc(){return pc;}
+    boolean isHalted(){return halted;}
+    int getRegister(int i){return registers[i];}
+
+    void setClockHz(int hz){
+        if (hz <= 0) throw new IllegalArgumentException("Clock frequency must be positive");
+        clockHz = hz;
+    }
 
     public CPU(List<Instructions> program){
         this.program = program;
@@ -17,11 +26,11 @@ public class CPU {
     public void run() throws InterruptedException {
         while (!halted) {
             step();
-            if (clockHz > 0) Thread.sleep(1000 / clockHz);
+            Thread.sleep(1000 / clockHz);
         }
     }
 
-    private void step(){
+    void step(){
         Instructions ins = program.get(pc);
         pc++;
         switch (ins.opcode){
@@ -44,11 +53,11 @@ public class CPU {
             case "MOV":
                 registers[ins.a] = registers[ins.b];
                 break;
-            //case "JLT":
-            //    if (registers[ins.a] < registers[ins.b]){
-            //        pc = ins.c potential third variable if I want to add ARM64 realistic commands
-            //    }
-            //    break;
+            case "JLT":
+                if (registers[ins.a] < registers[ins.b]){
+                    pc = ins.c;
+                }
+                break;
             case "ADD":
                 registers[ins.a] += registers[ins.b];
                 break;
