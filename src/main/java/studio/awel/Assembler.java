@@ -9,6 +9,9 @@ public class Assembler {
 
     public static List<Instructions> assemble(String filepath) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(filepath));
+        lines.replaceAll(line -> line.split("#")[0]);
+        lines.removeIf(String::isBlank);
+
         return lines.stream().map(line -> {
             String[] parts = line.trim().split(" ");
             String opcode = parts[0];

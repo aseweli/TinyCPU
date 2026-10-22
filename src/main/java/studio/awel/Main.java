@@ -2,13 +2,16 @@ package studio.awel;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter the program you want to read: ");
         List<Instructions> program;
         try{
-            program = Assembler.assemble("programs/showcase.asm");
+            program = Assembler.assemble("programs/" + scan.nextLine());
         } catch (IOException e){
             program = List.of(
                     new Instructions("LOAD", 0, 5),

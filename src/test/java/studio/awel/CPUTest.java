@@ -99,6 +99,18 @@ class CPUTest {
     }
 
     @Test
+    void strWritesData(){
+        CPU cpu = new CPU(List.of(
+                new Instructions("LOAD", 0, 5),
+                new Instructions("LOAD", 1, 2),
+                new Instructions("STR", 0, 10),
+                new Instructions("LDR", 1, 10)
+        ));
+        cpu.step(); cpu.step(); cpu.step(); cpu.step();
+        assertEquals(5, cpu.getRegister(1));
+    }
+
+    @Test
     void unknownOpcodeThrows() {
         CPU cpu = new CPU(List.of(new Instructions("BANANA", 0)));
         assertThrows(IllegalArgumentException.class, cpu::step);
